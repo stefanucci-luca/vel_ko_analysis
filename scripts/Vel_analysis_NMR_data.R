@@ -1,6 +1,7 @@
 
-
-nmr_df = readRDS("/Users/luca/Library/Group Containers/G69SCX94XU.duck/Library/Application Support/duck/Volumes/logincpu.hpc.cam.ac.uk – SFTP/shared_luanluan_luca_UKB/VEL/NMR_data.RData")
+# Read in the NMR data
+nmr_df = readRDS("NMR_data.RData")
+# relabel the genotype column
 colnames(nmr_df)[25] = "genotype"
 headers = unique(stringr::str_split(colnames(nmr_df), "_f", simplify=T, n=2)[,1])[26:length(unique(stringr::str_split(colnames(nmr_df), "_f", simplify=T, n=2)[,1]))]
 
