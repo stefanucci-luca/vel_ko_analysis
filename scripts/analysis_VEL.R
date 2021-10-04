@@ -1,3 +1,4 @@
+# lod the libraries used for the analysis
 library('lm.beta')
 library("questionr")
 library('esc')
@@ -5,7 +6,10 @@ library('effectsize')
 library('tidyverse')
 library('see')
 library('GGally')
-library(RColorBrewer)
+library('RColorBrewer')
+
+# set seed for reproducibility
+set.seed(1)
 
 ######################################################
 #                   _______     ___    __________ 
@@ -18,31 +22,33 @@ library(RColorBrewer)
 
 # SNP = rs566629828
 
-# Import VEL phenotype data
-df = xlsx::read.xlsx('ls760@platgenbio.net - Google Drive/My Drive/Phd/Shared Luca Mattia/VEL/Original files CBAL/C19-078 Manifest Assays March 2019 - results (2).xlsx', sheetIndex = 1)
+# Import VEL phenotype data from the donors cohort
+
+wdf = xlsx::read.xlsx('../data/C19-078 Manifest Assays March 2019 - results (2).xlsx', sheetIndex = 1)
+
 #summary(df)
+# skimr::skim(df)
 
 vel_het = c('S01HRB','S019YT','S001GV', 'S00278', 'S00PWE','S00U3F','S00WRX') # these 2 samples are heterozygous in the vel cohort
 
-wdf=df
-
-set.seed(1)
-# convert class to numeric where possible
+# When importing the class of certain numberic valued became factor
+# convert class back to numeric
 for(i in 1:length(colnames(wdf))){
+  # check if the column can coerce to numeric
   if ( sum(is.na(as.numeric(as.character(wdf[,i])))) == dim(wdf)[1] ) {
+    # if not possible don't convert and print the message
     message(colnames(wdf)[i], ' not converted')
   } else {
+    # convert to numeric
     wdf[,i] = as.numeric(as.character(wdf[,i]))
   }
 }
 
-str(wdf)
-summary(wdf)
+# explore the df
+# str(wdf)
+# summary(wdf)
 
-# subset the wdf to keep only VEL and WP10
-cohort_to_keep = c("DonorWP10","VEL")
-wdf_sbt = wdf[wdf$COHORT %in% cohort_to_keep,]
-
+#### Start to control from here
 
 wdf_sbt$gt = 'ref' 
 wdf_sbt$gt[which(wdf_sbt$COHORT == "VEL")] = "hom"
