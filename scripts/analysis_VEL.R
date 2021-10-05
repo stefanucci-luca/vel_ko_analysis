@@ -46,34 +46,6 @@ for(i in 1:length(colnames(wdf))){
 # str(wdf)
 # summary(wdf)
 
-#### Start to control from here
-
-wdf_sbt$gt = 'ref' 
-wdf_sbt$gt[which(wdf_sbt$COHORT == "VEL")] = "hom"
-wdf_sbt$gt[which(wdf_sbt$ID %in% vel_het)] = "het"
-wdf_sbt$gt[which(wdf_sbt$ID %in% 'S005VM')] = "hom"
-wdf_sbt$COHORT[which(wdf_sbt$ID %in% 'S005VM')] = "VEL"
-
-wdf_sbt = wdf_sbt %>% select("gt", colnames(wdf_sbt)[-55]) 
-  
-# FBC counts are not present in the VEL data.
-columns_to_remove = c("WBC", "RBC", "HGB", "MCV", "MCH",     
-          "MCHC", "PLT", "RDW_SD", "PDW",     
-          "MPV", "NEUT", "LYMPH", "MONO",    
-          "EO",  "BASO", "IG",  "RET_He",  
-          "PLT_I", "WBC_D",
-          'LDL', 'DLK1', 'WEIGHT',
-          'Free_T4')
-
-wdf_sbt_2 = wdf_sbt[, !(colnames(wdf_sbt) %in% columns_to_remove)]
-
-wdf_sbt_2$LDL = ( wdf_sbt_2$CHOL - wdf_sbt_2$HDL - wdf_sbt_2$TG ) / 5 # calculates LDL
-
-xlsx::write.xlsx(wdf_sbt_2, "/Volumes/GoogleDrive/My Drive/Phd/Shared Luca Mattia/VEL/Manuscript/Tables/To_CONTROL_tableS5.xlsx")
-
-ggpairs(wdf_sbt_2, 
-        columns = colnames(wdf_sbt_2[,-2]), )
-
 gender = c()
 feature = c()
 effect = c()
