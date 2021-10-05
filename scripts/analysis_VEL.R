@@ -24,7 +24,7 @@ set.seed(1)
 
 # Import VEL phenotype data from the donors cohort
 
-wdf = xlsx::read.xlsx('../data/C19-078 Manifest Assays March 2019 - results (2).xlsx', sheetIndex = 1)
+wdf = xlsx::read.xlsx('../data/result_wp10_vel/data_NIHR.xlsx', sheetIndex = 1)
 
 #summary(df)
 # skimr::skim(df)
