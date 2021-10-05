@@ -29,8 +29,6 @@ wdf = xlsx::read.xlsx('../data/result_wp10_vel/data_NIHR.xlsx', sheetIndex = 1)
 #summary(df)
 # skimr::skim(df)
 
-vel_het = c('S01HRB','S019YT','S001GV', 'S00278', 'S00PWE','S00U3F','S00WRX') # these 2 samples are heterozygous in the vel cohort
-
 # When importing the class of certain numberic valued became factor
 # convert class back to numeric
 for(i in 1:length(colnames(wdf))){
