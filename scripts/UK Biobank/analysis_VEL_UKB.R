@@ -260,7 +260,8 @@ for(i in which(startsWith(colnames(df_to_use_pheno), "cal_p"))) {
   print(i)
   normalise_tmp = df_to_use_pheno[, i] # no normalisation # simply to use the previous structure of the script
   model1 = glm(
-    normalise_tmp ~ factor(df_to_use_pheno$genotype) + df_to_use_pheno$ages + df_to_use_pheno$sex_f31_0_0 + df_to_use_pheno$bmi
+    normalise_tmp ~ factor(df_to_use_pheno$genotype) + df_to_use_pheno$ages + df_to_use_pheno$sex_f31_0_0 + df_to_use_pheno$bmi, 
+    family = "binomial"
   )
   param = parameters::model_parameters(model1, df_method = "wald")
   for (num in 1:length(unique(df_to_use_pheno$genotype))) {
